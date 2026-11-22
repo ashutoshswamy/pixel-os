@@ -1,0 +1,19 @@
+[package]
+name = "pixel-os"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bootloader = { version = "0.9", features = ["vga_320x200"] }
+font8x8 = { version = "0.3", default-features = false }
+
+[profile.dev]
+panic = "abort"
+opt-level = 2
+
+[profile.release]
+panic = "abort"
+
+# 2nd IDE disk = persistent storage. Create once: dd if=/dev/zero of=disk.img bs=1024 count=1024
+[package.metadata.bootimage]
+run-args = ["-drive", "file=disk.img,format=raw,if=ide,index=1"]
